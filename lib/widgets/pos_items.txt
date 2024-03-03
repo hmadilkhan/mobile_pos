@@ -1,0 +1,103 @@
+Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(2.0),
+                    height: 60,
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        width: 5.0,
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      // color:
+                      //     const Color.fromARGB(255, 245, 243, 243)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.green,
+                              child: const Center(
+                                child: Text(
+                                  "A",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontFamily: "Poppins",
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 7),
+                              child: const Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Sunmi T2 Lite Dual",
+                                    overflow: TextOverflow.fade,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      fontFamily: "Poppins",
+                                    ),
+                                  ),
+                                  Text(
+                                    "Doodh Patti Description ",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black,
+                                      fontFamily: "Poppins",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(2.0),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "PKR. 150,000",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                              Text(
+                                "100000 Unit",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.green,
+                                  fontFamily: "Poppins",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );

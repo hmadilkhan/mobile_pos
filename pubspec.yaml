@@ -1,0 +1,37 @@
+name: mobile_pos
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  device_preview: ^1.1.0
+  flutter_timer_countdown: ^1.0.5
+  shared_preferences: ^2.2.2
+  http: ^1.2.0
+  get_storage: ^2.1.1
+  get: ^4.6.6
+  sqflite: ^2.3.2
+  path: ^1.8.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
