@@ -166,9 +166,10 @@ class DatabaseHelper {
   static Future<List<ProductModel>?> getAllProducts(String? department) async {
     final db = await _getDB();
     List<Map<String, dynamic>> maps = [];
-    if(department != "All"){
-      maps = await db.query("Product",where: "department = ?",whereArgs: [department]);
-    }else {
+    if (department != "All") {
+      maps = await db
+          .query("Product", where: "department = ?", whereArgs: [department]);
+    } else {
       maps = await db.query("Product");
     }
 
@@ -181,15 +182,14 @@ class DatabaseHelper {
 
   static getProductsByDepartment(String? department) async {
     final db = await _getDB();
-    var result = await db.query('Product');
-    return result;
-    //
-    // final List<Map<String, dynamic>> maps = await db.query("Product",where: "department = ?",whereArgs: [department]);
-    //
-    // if (maps.isEmpty) {
-    //   return null;
-    // }
-    // return List.generate(
-    //     maps.length, (index) => ProductModel.dbFromJson(maps[index]));
+
+    if (department != "All") {
+      var result =
+          db.query("Product", where: "department = ?", whereArgs: [department]);
+      return result;
+    } else {
+      var result = await db.query("Product");
+      return result;
+    }
   }
 }

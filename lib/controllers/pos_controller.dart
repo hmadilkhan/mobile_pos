@@ -4,41 +4,43 @@ import 'package:mobile_pos/models/product_model.dart';
 import 'package:mobile_pos/services/database_helper.dart';
 
 class PosController extends GetxController {
-  String dummyText = "hello";
+  RxString productSearchText = "".obs;
   RxInt selectedIndex = 0.obs;
   RxString departmentName = "All".obs;
-  final listProduct = Future.value(<ProductModel>[]).obs;
-  // final listProduct = <ProductModel>[].obs;
+  // final listProduct = Future.value(<ProductModel>[]).obs;
+  final listProduct = <ProductModel>[].obs;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    AllProducts();
+    allProducts();
   }
 
-  void changeDepartment(department)
-  {
+  void changeDepartment(department) {
     departmentName.value = department;
-    print(department);
-    this.AllProducts();
+    allProducts();
     update();
   }
 
+  void productSearch(text) {
+    productSearchText.value = text;
+    print(productSearchText);
+  }
+
   Future<List<ProductModel>?> getAllProducts() async {
-    return await DatabaseHelper.getAllProducts(departmentName.value);
+    var result = await DatabaseHelper.getAllProducts(departmentName.value);
+    update();
+    return result;
   }
 
-  Future<List<ProductModel>?> AllProducts() async {
-    // listProduct.assignAll([]);
-    final List<Map<String, dynamic>> maps =  await DatabaseHelper.getProductsByDepartment(departmentName.value);
+  Future<List<ProductModel>?> allProducts() async {
+    listProduct.value = [];
+    final List<Map<String, dynamic>> maps =
+        await DatabaseHelper.getProductsByDepartment(departmentName.value);
     var results = List.generate(
-            maps.length, (index) =>
-         ProductModel.dbFromJson(maps[index]));
-    // listProduct.value = results;
-    // for(var product in listProduct.value){
-    //   print(product.department);
-    // }
+        maps.length, (index) => ProductModel.dbFromJson(maps[index]));
+    listProduct.value = results;
+    return results;
   }
-
 }

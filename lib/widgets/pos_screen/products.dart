@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/controllers/pos_controller.dart';
-import 'package:mobile_pos/services/database_helper.dart';
 
 class Product extends StatefulWidget {
   const Product({super.key});
@@ -16,22 +13,28 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   var controller = PosController();
   // late final Future futureProducts = DatabaseHelper.getAllProducts();
-  late final Future futureProducts = controller.AllProducts();
+  late final Future futureProducts = controller.getAllProducts();
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<PosController>(builder: (controller) {
       return Expanded(
-          child:  FutureBuilder(
-          future: futureProducts,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.separated(
-                  itemCount: snapshot.data?.length,
+        child:
+            // FutureBuilder(
+            //   future: futureProducts,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            // return
+            Obx(
+          () => (controller.listProduct.length == 0
+              ? Center()
+              : ListView.separated(
+                  itemCount: controller.listProduct.length,
                   separatorBuilder: (BuildContext context, int index) =>
                       const Divider(height: 1),
                   itemBuilder: (context, index) {
-                    final product = snapshot.data?[index];
+                    // final product = snapshot.data?[index];
+                    final product = controller.listProduct[index];
                     return GestureDetector(
                       child: ListTile(
                         leading: ClipRRect(
@@ -82,14 +85,15 @@ class _ProductState extends State<Product> {
                         print(controller.selectedIndex.value);
                       },
                     );
-                  });
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+                  })),
         ),
+        //     } else {
+        //       return const Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     }
+        //   },
+        // ),
       );
     });
   }
