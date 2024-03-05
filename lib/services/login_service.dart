@@ -32,10 +32,10 @@ class LoginService extends GetxController {
           prefs.setString("company", userModel.company.toString());
           prefs.setString("branch", userModel.branch.toString());
           prefs.setString("token", bearerToken);
-          var result = addUser(userModel)
+          addUser(userModel)
               .then((value) => getDepartments())
               .then((value) => getProducts())
-              .then((value) => Get.offAll(() => PosScreen()));
+              .then((value) => Get.offAll(() => const PosScreen()));
           return userModel;
         } else {
           // final jsonResponse = json.decode(response.body);
@@ -44,7 +44,6 @@ class LoginService extends GetxController {
         }
       });
     } catch (e) {
-      print(e);
       return null;
     }
     return null;
@@ -55,12 +54,16 @@ class LoginService extends GetxController {
   }
 
   Future<List<DepartmentModel>?> getDepartments() async {
-    return await service.deleteAllDepartment().then((value) => service.getDepartments());
+    return await service
+        .deleteAllDepartment()
+        .then((value) => service.getDepartments());
     // return await service.getDepartments();
   }
 
   Future<List<ProductModel>?> getProducts() async {
-    return await service.deleteAllProduct().then((value) => service.getProducts());
+    return await service
+        .deleteAllProduct()
+        .then((value) => service.getProducts());
     // return await service.getDepartments();
   }
 }

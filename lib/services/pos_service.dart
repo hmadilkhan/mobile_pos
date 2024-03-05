@@ -4,7 +4,6 @@ import 'package:mobile_pos/models/department_model.dart';
 import 'package:mobile_pos/services/database_helper.dart';
 import 'package:mobile_pos/utils/api-list.dart';
 import 'package:mobile_pos/utils/server.dart';
-import 'package:mobile_pos/widgets/pos_screen/products.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/product_model.dart';
@@ -57,7 +56,7 @@ class PosService {
 
   List<ProductModel> parseProducts(String responseBody) {
     final parsed =
-    (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
+        (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
 
     return parsed
         .map<ProductModel>((json) => ProductModel.fromJson(json))
@@ -76,13 +75,13 @@ class PosService {
     if (response.statusCode == 200) {
       products = parseProducts(response.body);
       for (var product in products) {
-        final prod = ProductModel(
-          name: product.name,
-          description: product.description,
-          image: product.image,
-          unit: product.unit,
-          price: product.price,
-        );
+        // final prod = ProductModel(
+        //   name: product.name,
+        //   description: product.description,
+        //   image: product.image,
+        //   unit: product.unit,
+        //   price: product.price,
+        // );
         addProduct(product);
       }
       return products;

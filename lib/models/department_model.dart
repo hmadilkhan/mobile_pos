@@ -20,7 +20,7 @@ class DepartmentModel {
       this.date,
       this.time});
 
-  DepartmentModel.DBFromJson(Map<String,dynamic> json){
+  DepartmentModel.dBFromJson(Map<String, dynamic> json) {
     id = json["id"];
     departmentName = json["name"];
     code = json["code"];

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/models/user_model.dart';
 import 'package:mobile_pos/screens/pos_screen.dart';
 import 'package:mobile_pos/services/login_service.dart';
@@ -33,29 +31,26 @@ class _LoginScreenState extends State<LoginScreen> {
     var token = prefs.getString("token") ?? "";
     if (token != "") {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PosScreen()));
+          context, MaterialPageRoute(builder: (context) => const PosScreen()));
     }
   }
 
   Future<void> login(
       BuildContext context, String email, String password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       isLoggedIn = true;
     });
 
-    var result = await service.login(email, password);
-    var chkLoggedIn = await prefs.getBool("isLogedIn");
-    print("Check Logged In State ${chkLoggedIn}");
-    if (result?.name != null) {
-      print("In IF State ${result?.name}");
-      setState(() {
-        isLoggedIn = false;
-      });
-
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => PosScreen()));
-    }
+    // var result =
+    await service.login(email, password);
+    // var chkLoggedIn =  prefs.getBool("isLogedIn");
+    // print("Check Logged In State ${chkLoggedIn}");
+    // if (result?.name != null) {
+    //   setState(() {
+    //     isLoggedIn = false;
+    //   });
+    // }
   }
 
   @override

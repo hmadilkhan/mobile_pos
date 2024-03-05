@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/models/product_model.dart';
 import 'package:mobile_pos/services/database_helper.dart';
 
@@ -12,7 +11,6 @@ class PosController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     allProducts();
   }
@@ -25,7 +23,8 @@ class PosController extends GetxController {
 
   void productSearch(text) {
     productSearchText.value = text;
-    print(productSearchText);
+    getProductsByName();
+    update();
   }
 
   Future<List<ProductModel>?> getAllProducts() async {
@@ -38,6 +37,16 @@ class PosController extends GetxController {
     listProduct.value = [];
     final List<Map<String, dynamic>> maps =
         await DatabaseHelper.getProductsByDepartment(departmentName.value);
+    var results = List.generate(
+        maps.length, (index) => ProductModel.dbFromJson(maps[index]));
+    listProduct.value = results;
+    return results;
+  }
+
+  Future<List<ProductModel>?> getProductsByName() async {
+    listProduct.value = [];
+    final List<Map<String, dynamic>> maps =
+        await DatabaseHelper.getProductsByName(productSearchText.value);
     var results = List.generate(
         maps.length, (index) => ProductModel.dbFromJson(maps[index]));
     listProduct.value = results;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/controllers/pos_controller.dart';
 
 class ProductSearch extends StatefulWidget {
@@ -17,7 +16,7 @@ class _ProductSearchState extends State<ProductSearch> {
 
     return GetBuilder<PosController>(builder: (controller) {
       return Padding(
-        padding: EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(2.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -27,7 +26,8 @@ class _ProductSearchState extends State<ProductSearch> {
                 controller: search,
                 textAlign: TextAlign.left,
                 onChanged: (value) {
-                  controller.productSearchText(search.text);
+                  // print(value)
+                  controller.productSearch(value);
                 },
                 style: const TextStyle(
                   color: Color(0xFF393939),

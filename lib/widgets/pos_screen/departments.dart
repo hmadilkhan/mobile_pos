@@ -38,7 +38,7 @@ class _DepartmentState extends State<Department> {
                             border: Border.all(
                               color: index == controller.selectedIndex.value
                                   ? Colors.green
-                                  : Color.fromARGB(255, 240, 236, 236),
+                                  : const Color.fromARGB(255, 240, 236, 236),
                               width: 5.0,
                               style: BorderStyle.solid,
                             ),
@@ -46,7 +46,7 @@ class _DepartmentState extends State<Department> {
                                 const BorderRadius.all(Radius.circular(10.0)),
                             color: index == controller.selectedIndex.value
                                 ? Colors.green
-                                : Color.fromARGB(255, 240, 236, 236)),
+                                : const Color.fromARGB(255, 240, 236, 236)),
                         child: Text(
                           deparment.departmentName.toString(),
                           style: TextStyle(
@@ -54,7 +54,7 @@ class _DepartmentState extends State<Department> {
                               fontWeight: FontWeight.w600,
                               color: index == controller.selectedIndex.value
                                   ? Colors.white
-                                  : Color.fromARGB(255, 104, 101, 101)),
+                                  : const Color.fromARGB(255, 104, 101, 101)),
                         ),
                       ),
                       onTap: () {

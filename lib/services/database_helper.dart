@@ -38,12 +38,12 @@ class DatabaseHelper {
           )''');
   }
 
-  static void getStructure() async {
-    final db = await _getDB();
-    (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
-      print(row.values);
-    });
-  }
+  // static void getStructure() async {
+  //   final db = await _getDB();
+  //   (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+  //     print(row.values);
+  //   });
+  // }
 
   static Future<int> addUser(UserModel user) async {
     final db = await _getDB();
@@ -82,9 +82,10 @@ class DatabaseHelper {
   static Future<void> addCustomerDeparment() async {
     final db = await _getDB();
     await db.transaction((txn) async {
-      int id1 = await txn.rawInsert(
+      // int id1 =
+      await txn.rawInsert(
           'INSERT INTO Department(code,name,image) VALUES("1234","First Department","test.png");');
-      print('inserted1: $id1');
+      // print('inserted1: $id1');
     });
   }
 
@@ -129,7 +130,7 @@ class DatabaseHelper {
       return null;
     }
     return List.generate(
-        maps.length, (index) => DepartmentModel.DBFromJson(maps[index]));
+        maps.length, (index) => DepartmentModel.dBFromJson(maps[index]));
   }
 
   static Future<int> addProduct(ProductModel product) async {
@@ -186,6 +187,19 @@ class DatabaseHelper {
     if (department != "All") {
       var result =
           db.query("Product", where: "department = ?", whereArgs: [department]);
+      return result;
+    } else {
+      var result = await db.query("Product");
+      return result;
+    }
+  }
+
+  static getProductsByName(String? name) async {
+    final db = await _getDB();
+
+    if (name != "") {
+      var result =
+          db.query("Product", where: "name LIKE ?", whereArgs: ['%$name%']);
       return result;
     } else {
       var result = await db.query("Product");

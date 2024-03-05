@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/controllers/pos_controller.dart';
 
 class Product extends StatefulWidget {
@@ -26,8 +25,10 @@ class _ProductState extends State<Product> {
             //     if (snapshot.hasData) {
             // return
             Obx(
-          () => (controller.listProduct.length == 0
-              ? Center()
+          () => (controller.listProduct.isEmpty
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
               : ListView.separated(
                   itemCount: controller.listProduct.length,
                   separatorBuilder: (BuildContext context, int index) =>
@@ -82,7 +83,7 @@ class _ProductState extends State<Product> {
                         ),
                       ),
                       onTap: () {
-                        print(controller.selectedIndex.value);
+                        // print(controller.selectedIndex.value);
                       },
                     );
                   })),

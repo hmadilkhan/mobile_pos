@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PosHeader extends StatefulWidget {
-  const PosHeader({Key? key}) : super(key: key);
+  const PosHeader({super.key});
 
   @override
   State<PosHeader> createState() => _PosHeaderState();
@@ -15,19 +15,15 @@ class _PosHeaderState extends State<PosHeader> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // setvalues();
   }
 
-  void setvalues() async{
+  void setvalues() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     company = prefs.getString("company")!;
-    print("company: ${company}");
     branch = prefs.getString("branch")!;
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -46,34 +42,40 @@ class _PosHeaderState extends State<PosHeader> {
           Row(
             children: [
               Padding(
-                padding: EdgeInsets.only(right: 2.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "${company}",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.green,
-                        fontFamily: "Poppins",
-                      ),
-                    ),
-                    Text(
-                      "${city}",
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text("${branch}",
-                        style: TextStyle(
-                          fontSize: 15,
+                padding: const EdgeInsets.only(right: 2.0),
+                child: SizedBox(
+                  width: 230,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        company,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           color: Colors.green,
                           fontFamily: "Poppins",
-                        )),
-                  ],
+                        ),
+                      ),
+                      Text(
+                        city,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(branch,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.green,
+                            fontFamily: "Poppins",
+                          )),
+                    ],
+                  ),
                 ),
               ),
               Container(
