@@ -8,10 +8,7 @@ import 'package:mobile_pos/utils/my_binding.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => const MyApp(),
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
