@@ -29,23 +29,31 @@ class _DepartmentLandscapeState extends State<DepartmentLandscape> {
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
                       var deparment = snapshot.data?[index];
-
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundImage: NetworkImage(deparment.image),
+                      return GestureDetector(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      NetworkImage(deparment.image),
+                                ),
+                                Text(deparment.departmentName.toString(),
+                                    style: TextStyle(
+                                        color: AppColors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w500)),
+                              ],
                             ),
-                            Text(deparment.departmentName.toString(),
-                                style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500)),
-                          ],
-                        ),
-                      );
+                          ),
+                          onTap: () {
+                            setState(() {
+                              controller.changeDepartment(
+                                  deparment.departmentName.toString());
+                              controller.selectedIndex.value = index;
+                            });
+                          });
                     });
               } else {
                 return const Center(child: CircularProgressIndicator());
