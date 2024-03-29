@@ -40,7 +40,7 @@ class PosScreen extends StatelessWidget {
               "POS",
               style: TextStyle(color: AppColors.white),
             ),
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.charcoal,
             actions: <Widget>[
               IconButton(
                 icon: Icon(

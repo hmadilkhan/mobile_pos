@@ -20,7 +20,7 @@ class _DepartmentLandscapeState extends State<DepartmentLandscape> {
     return GetBuilder<PosController>(builder: (controller) {
       return Container(
         width: MediaQuery.of(context).size.width * 0.1,
-        color: AppColors.charcoal,
+        color: Colors.black,
         child: FutureBuilder(
             future: futureDepartments,
             builder: (context, snapshot) {

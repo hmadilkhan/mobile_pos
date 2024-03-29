@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_pos/utils/colors.dart';
 import 'package:mobile_pos/widgets/pos_screen/products.dart';
+import 'package:mobile_pos/widgets/products_items_landscape.dart';
 
 class ProductsLandscape extends StatefulWidget {
   const ProductsLandscape({super.key});
@@ -18,7 +19,7 @@ class _ProductsLandscapeState extends State<ProductsLandscape> {
       child: Column(
         children: [
           ProductSearchLandscape(context),
-          Product(),
+          ProductItemsLandscape(),
         ],
       ),
     );
@@ -26,7 +27,7 @@ class _ProductsLandscapeState extends State<ProductsLandscape> {
 
   Padding ProductSearchLandscape(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(9.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.6,
         child: TextField(
@@ -68,7 +69,7 @@ class _ProductsLandscapeState extends State<ProductsLandscape> {
                 fontWeight: FontWeight.w600,
               ),
               disabledBorder:
-                  OutlineInputBorder(borderRadius: BorderRadius.zero)),
+                  const OutlineInputBorder(borderRadius: BorderRadius.zero)),
         ),
       ),
     );
