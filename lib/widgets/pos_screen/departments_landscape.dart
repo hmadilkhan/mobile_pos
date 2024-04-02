@@ -35,9 +35,13 @@ class _DepartmentLandscapeState extends State<DepartmentLandscape> {
                             child: Column(
                               children: [
                                 CircleAvatar(
+                                  backgroundColor: AppColors.primary,
                                   radius: 50,
-                                  backgroundImage:
-                                      NetworkImage(deparment.image),
+                                  child: CircleAvatar(
+                                    radius: 47,
+                                    backgroundImage:
+                                        NetworkImage(deparment.image),
+                                  ),
                                 ),
                                 Text(deparment.departmentName.toString(),
                                     style: TextStyle(

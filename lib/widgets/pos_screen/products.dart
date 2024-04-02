@@ -18,13 +18,7 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return GetBuilder<PosController>(builder: (controller) {
       return Expanded(
-        child:
-            // FutureBuilder(
-            //   future: futureProducts,
-            //   builder: (context, snapshot) {
-            //     if (snapshot.hasData) {
-            // return
-            Obx(
+        child: Obx(
           () => (controller.listProduct.isEmpty
               ? const Center(
                   child: CircularProgressIndicator(),
@@ -82,19 +76,10 @@ class _ProductState extends State<Product> {
                           ],
                         ),
                       ),
-                      onTap: () {
-                        // print(controller.selectedIndex.value);
-                      },
+                      onTap: () {},
                     );
                   })),
         ),
-        //     } else {
-        //       return const Center(
-        //         child: CircularProgressIndicator(),
-        //       );
-        //     }
-        //   },
-        // ),
       );
     });
   }

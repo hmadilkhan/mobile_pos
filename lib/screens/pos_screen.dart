@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_pos/utils/colors.dart';
+import 'package:mobile_pos/widgets/pos_screen/cart_landscape.dart';
 import 'package:mobile_pos/widgets/pos_screen/departments.dart';
 import 'package:mobile_pos/widgets/pos_screen/departments_landscape.dart';
 import 'package:mobile_pos/widgets/pos_screen/pos_header.dart';
@@ -101,10 +102,7 @@ class PosScreen extends StatelessWidget {
             child: Row(children: [
               DepartmentLandscape(),
               ProductsLandscape(),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                color: AppColors.charcoal,
-              ),
+              Cart(),
             ]),
           ),
         );

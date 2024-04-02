@@ -1,3 +1,4 @@
+import 'package:mobile_pos/models/cart_modal.dart';
 import 'package:mobile_pos/models/department_model.dart';
 import 'package:mobile_pos/models/product_model.dart';
 import 'package:mobile_pos/models/user_model.dart';
@@ -14,20 +15,20 @@ class DatabaseHelper {
   }
 
   static void _createDB(Database db) async {
-    await db.execute('''CREATE TABLE User(
+    await db.execute('''CREATE TABLE IF NOT EXISTS User(
           id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
           token TEXT NULL,
           name TEXT NULL,
           company TEXT NULL,
           branch TEXT NULL
           )''');
-    await db.execute('''CREATE TABLE Department(
+    await db.execute('''CREATE TABLE IF NOT EXISTS Department(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           code TEXT NULL,
           name TEXT NULL,
           image TEXT NULL
           )''');
-    await db.execute('''CREATE TABLE Product(
+    await db.execute('''CREATE TABLE IF NOT EXISTS Product(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT NULL,
           unit TEXT NULL,
@@ -35,6 +36,18 @@ class DatabaseHelper {
           department TEXT NULL,
           description TEXT NULL,
           image TEXT NULL
+          )''');
+    await db.execute('''CREATE TABLE IF NOT EXISTS Cart(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NULL,
+          unit TEXT NULL,
+          price TEXT NULL,
+          department TEXT NULL,
+          description TEXT NULL,
+          image TEXT NULL,
+          qty TEXT NULL,
+          amount TEXT NULL,
+          totalamount TEXT NULL
           )''');
   }
 
@@ -205,5 +218,49 @@ class DatabaseHelper {
       var result = await db.query("Product");
       return result;
     }
+  }
+
+  static Future<int> checkItemInCart(Cart cart) async {
+    final db = await _getDB();
+    List<Map> maps =
+        await db.query("Cart", where: 'id = ?', whereArgs: [cart.id]);
+    return maps.length;
+  }
+
+  static Future<int> addItemToCart(Cart cart) async {
+    final db = await _getDB();
+    return await db.insert("Cart", cart.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> updateItemToCart(Cart cart) async {
+    final db = await _getDB();
+    return await db.update("Cart", cart.toJson(),
+        where: 'id = ?',
+        whereArgs: [cart.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> deleteItemToCart(Cart cart) async {
+    final db = await _getDB();
+    return await db.delete(
+      "Cart",
+      where: 'id = ?',
+      whereArgs: [cart.id],
+    );
+  }
+
+  static getAllItemOfCart() async {
+    final db = await _getDB();
+    var result = await db.query("Cart");
+    return result;
+  }
+
+  static Future<int> deleteAllItemsOfCart() async {
+    final db = await _getDB();
+    return await db.delete(
+      "Cart",
+      where: '1 = 1',
+    );
   }
 }
