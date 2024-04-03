@@ -1,10 +1,8 @@
-import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_pos/controllers/pos_controller.dart';
 import 'package:mobile_pos/utils/colors.dart';
 import 'package:mobile_pos/widgets/pos_screen/item_card.dart';
-import 'package:path/path.dart';
 
 class ProductItemsLandscape extends StatefulWidget {
   const ProductItemsLandscape({super.key});

@@ -24,8 +24,21 @@ class CartController extends GetxController {
     return results;
   }
 
-  void addItem(quantity, product) async {
-    var cart = new Cart();
+  void addItem(quantity, product, mode) async {
+    var qty = 1;
+    var result = await DatabaseHelper.querySpecificData(product.id);
+    if (!result.isEmpty) {
+      qty = int.parse(result?[0]["qty"]);
+      qty++;
+    }
+    if (mode == "cart") {
+      print(quantity < qty);
+      if (quantity < qty) {
+        qty = quantity;
+        qty--;
+      }
+    }
+    var cart = Cart();
     cart.id = product.id;
     cart.name = product.name;
     cart.description = product.description;
@@ -33,16 +46,27 @@ class CartController extends GetxController {
     cart.price = product.price;
     cart.image = product.image;
     cart.department = product.department;
-    cart.qty = quantity.toString();
-    cart.amount = (quantity * double.parse(product.price)).toString();
-    cart.totalamount = (quantity * double.parse(product.price)).toString();
-    var count = await DatabaseHelper.checkItemInCart(cart);
+    cart.qty = qty.toString();
+    cart.amount = (qty * double.parse(product.price)).toString();
+    cart.totalamount = (qty * double.parse(product.price)).toString();
 
+    var count = await DatabaseHelper.checkItemInCart(cart);
     if (count == 0) {
       await DatabaseHelper.addItemToCart(cart);
     } else {
       await DatabaseHelper.updateItemToCart(cart);
     }
+
+    if (qty == 0) {
+      await DatabaseHelper.deleteItemToCart(cart);
+    }
+    // else {
+    // if (count == 0) {
+    //   await DatabaseHelper.addItemToCart(cart);
+    // } else {
+    //   await DatabaseHelper.updateItemToCart(cart);
+    // }
+    // }
     allItems();
     update();
   }

@@ -220,6 +220,11 @@ class DatabaseHelper {
     }
   }
 
+  static Future querySpecificData(int id) async {
+    final db = await _getDB();
+    return await db.query("Cart", where: "id = ?", whereArgs: [id]);
+  }
+
   static Future<int> checkItemInCart(Cart cart) async {
     final db = await _getDB();
     List<Map> maps =

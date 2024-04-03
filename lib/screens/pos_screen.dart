@@ -98,7 +98,7 @@ class PosScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: SafeArea(
+          body: const SafeArea(
             child: Row(children: [
               DepartmentLandscape(),
               ProductsLandscape(),

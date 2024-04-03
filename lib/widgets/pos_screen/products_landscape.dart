@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_pos/utils/colors.dart';
 import 'package:mobile_pos/widgets/pos_screen/product_search_landscape.dart';
-import 'package:mobile_pos/widgets/pos_screen/products.dart';
 import 'package:mobile_pos/widgets/products_items_landscape.dart';
 
 class ProductsLandscape extends StatefulWidget {
@@ -17,7 +16,7 @@ class _ProductsLandscapeState extends State<ProductsLandscape> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       color: AppColors.charcoal,
-      child: Column(
+      child: const Column(
         children: [
           ProductSearchLandscape(),
           ProductItemsLandscape(),
