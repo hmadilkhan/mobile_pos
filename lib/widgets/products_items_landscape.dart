@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_pos/controllers/pos_controller.dart';
@@ -27,11 +29,10 @@ class _ProductItemsLandscapeState extends State<ProductItemsLandscape> {
                   padding: const EdgeInsets.all(8.0),
                   child: GridView.builder(
                       itemCount: controller.listProduct.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: (Platform.isWindows ? 6 : 4),
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8),
                       itemBuilder: (BuildContext context, int index) {
                         final product = controller.listProduct[index];
                         return ItemCard(product);

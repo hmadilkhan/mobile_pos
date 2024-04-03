@@ -17,8 +17,9 @@ void main() {
   if (Platform.isWindows || Platform.isLinux) {
     // Initialize FFI
     sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
   }
-  // databaseFactory = databaseFactoryFfi;
+
   runApp(const MyApp());
 }
 

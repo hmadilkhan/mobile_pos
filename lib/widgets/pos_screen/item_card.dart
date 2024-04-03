@@ -58,8 +58,8 @@ class _ItemCardState extends State<ItemCard> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, right: 10.0, bottom: 7.0),
+                  padding:
+                      const EdgeInsets.only(left: 0.0, right: 0.0, bottom: 7.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,

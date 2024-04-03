@@ -68,7 +68,7 @@ class _CartItemState extends State<CartItem> {
                   ),
                 ),
                 CartStepperInt(
-                  size: 28,
+                  size: 25,
                   style: CartStepperStyle(
                     radius: const Radius.circular(5),
                     foregroundColor: AppColors.primary,
