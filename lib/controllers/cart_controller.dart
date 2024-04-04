@@ -1,9 +1,14 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/models/cart_modal.dart';
 import 'package:mobile_pos/services/database_helper.dart';
 
 class CartController extends GetxController {
   var listItems = <Cart>[].obs;
+  RxDouble subtotal = 0.00.obs;
+  RxDouble taxamount = 0.00.obs;
+  RxDouble deliveryCharges = 100.00.obs;
+  RxDouble total = 0.00.obs;
 
   @override
   void onInit() {
@@ -32,10 +37,9 @@ class CartController extends GetxController {
       qty++;
     }
     if (mode == "cart") {
-      print(quantity < qty);
       if (quantity < qty) {
         qty = quantity;
-        qty--;
+        // qty--;
       }
     }
     var cart = Cart();
@@ -60,14 +64,17 @@ class CartController extends GetxController {
     if (qty == 0) {
       await DatabaseHelper.deleteItemToCart(cart);
     }
-    // else {
-    // if (count == 0) {
-    //   await DatabaseHelper.addItemToCart(cart);
-    // } else {
-    //   await DatabaseHelper.updateItemToCart(cart);
-    // }
-    // }
+
+    calculateSubTotal();
     allItems();
     update();
+  }
+
+  void calculateSubTotal() async {
+    var subtotalAmount = await DatabaseHelper.SumAmountOfCart();
+    if (subtotalAmount[0]["Total"] != null) {
+      subtotal.value = subtotalAmount[0]["Total"];
+    }
+    total.value = subtotal.value + taxamount.value + deliveryCharges.value;
   }
 }

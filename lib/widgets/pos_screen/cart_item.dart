@@ -25,6 +25,9 @@ class _CartItemState extends State<CartItem> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      _counterInit = int.tryParse(widget.product.qty ?? "")!;
+    });
     return GetBuilder<CartController>(builder: (controller) {
       return GestureDetector(
         child: ListTile(

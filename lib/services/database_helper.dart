@@ -268,4 +268,12 @@ class DatabaseHelper {
       where: '1 = 1',
     );
   }
+
+  static Future SumAmountOfCart() async {
+    final db = await _getDB();
+    var result =
+        await db.rawQuery("SELECT SUM(totalamount) as Total FROM Cart");
+    print(result.toList());
+    return result.toList();
+  }
 }

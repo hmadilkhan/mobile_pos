@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:mobile_pos/controllers/cart_controller.dart';
 import 'package:mobile_pos/utils/colors.dart';
@@ -55,7 +56,7 @@ class _CartState extends State<Cart> {
               child: Container(
                 margin: const EdgeInsets.only(top: 10),
                 width: MediaQuery.of(context).size.width * 0.29,
-                height: MediaQuery.of(context).size.height * 0.6,
+                height: MediaQuery.of(context).size.height * 0.4,
                 decoration: BoxDecoration(
                   color: AppColors.charcoal,
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -86,9 +87,21 @@ class _CartState extends State<Cart> {
                                 color: AppColors.primary,
                               ),
                           itemBuilder: (context, index) {
-                            // final product = snapshot.data?[index];
                             final product = controller.listItems[index];
-                            return CartItem(product);
+                            return Slidable(
+                              endActionPane: ActionPane(
+                                motion: const DrawerMotion(),
+                                children: [
+                                  SlidableAction(
+                                    backgroundColor: Colors.red.shade400,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                    onPressed: (context) => _onDismissed(),
+                                  ),
+                                ],
+                              ),
+                              child: CartItem(product),
+                            );
                           })),
                 ),
               ),
@@ -108,13 +121,13 @@ class _CartState extends State<Cart> {
               ),
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                         right: 5.0, left: 5.0, bottom: 3.0, top: 3.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Sub Total",
                           style: TextStyle(
                             fontSize: 16,
@@ -124,8 +137,8 @@ class _CartState extends State<Cart> {
                           ),
                         ),
                         Text(
-                          "Rs. 1599",
-                          style: TextStyle(
+                          "Rs. ${controller.subtotal.value}",
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
@@ -135,13 +148,13 @@ class _CartState extends State<Cart> {
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(right: 5.0, left: 5.0, bottom: 3.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 5.0, left: 5.0, bottom: 3.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Tax",
                           style: TextStyle(
                             fontSize: 16,
@@ -151,8 +164,8 @@ class _CartState extends State<Cart> {
                           ),
                         ),
                         Text(
-                          "Rs. 500",
-                          style: TextStyle(
+                          "Rs. ${controller.taxamount.value}",
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
@@ -162,13 +175,13 @@ class _CartState extends State<Cart> {
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(right: 5.0, left: 5.0, bottom: 4.0),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 5.0, left: 5.0, bottom: 4.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Delivery Charges",
                           style: TextStyle(
                             fontSize: 16,
@@ -178,8 +191,8 @@ class _CartState extends State<Cart> {
                           ),
                         ),
                         Text(
-                          "Rs. 100",
-                          style: TextStyle(
+                          "Rs. ${controller.deliveryCharges.value}",
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
@@ -193,24 +206,25 @@ class _CartState extends State<Cart> {
                     height: double.minPositive,
                     color: AppColors.primary,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 5.0, left: 5.0, top: 2.0),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 5.0, left: 5.0, top: 2.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Total",
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 22,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                             fontFamily: "Poppins",
                           ),
                         ),
                         Text(
-                          "Rs. 1599",
-                          style: TextStyle(
-                            fontSize: 24,
+                          "Rs. ${controller.total.value}",
+                          style: const TextStyle(
+                            fontSize: 22,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                             fontFamily: "Poppins",
@@ -221,10 +235,38 @@ class _CartState extends State<Cart> {
                   )
                 ],
               ),
-            )
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.29,
+              height: MediaQuery.of(context).size.height * 0.08,
+              margin: EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(
+                  color: AppColors.primary,
+                  width: 3.0,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              child: Center(
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'PLACE ORDER',
+                    style: TextStyle(
+                      color: AppColors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       );
     });
   }
+
+  _onDismissed() {}
 }
