@@ -1,4 +1,3 @@
-import 'package:cart_stepper/cart_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -14,7 +13,6 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  int _counterInit = 0;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CartController>(builder: (controller) {

@@ -4,11 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:mobile_pos/controllers/auth_controller.dart';
 import 'package:mobile_pos/screens/login_screen.dart';
-import 'package:mobile_pos/screens/pos_screen.dart';
 import 'package:mobile_pos/utils/my_binding.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:mobile_pos/main_view.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

@@ -39,16 +39,39 @@ class _CartState extends State<Cart> {
                   style: BorderStyle.solid,
                 ),
               ),
-              child: const Center(
-                child: Text(
-                  "ORDER CART",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontFamily: "Poppins",
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "ORDER CART",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        fontFamily: "Poppins",
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Transform.scale(
+                      scale: 1.5,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.discount_outlined,
+                          color: AppColors.white,
+                          // size: 40,
+                        ),
+                        onPressed: () {
+                          // do something
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -239,7 +262,7 @@ class _CartState extends State<Cart> {
             Container(
               width: MediaQuery.of(context).size.width * 0.29,
               height: MediaQuery.of(context).size.height * 0.08,
-              margin: EdgeInsets.all(6),
+              margin: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: const BorderRadius.all(Radius.circular(10)),

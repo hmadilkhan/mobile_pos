@@ -71,7 +71,7 @@ class CartController extends GetxController {
   }
 
   void calculateSubTotal() async {
-    var subtotalAmount = await DatabaseHelper.SumAmountOfCart();
+    var subtotalAmount = await DatabaseHelper.sumAmountOfCart();
     if (subtotalAmount[0]["Total"] != null) {
       subtotal.value = subtotalAmount[0]["Total"];
     }
