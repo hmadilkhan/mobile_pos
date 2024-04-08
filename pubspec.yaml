@@ -22,6 +22,8 @@ dependencies:
   cart_stepper: ^4.3.0
   sqflite_common_ffi: ^2.3.2+1
   flutter_slidable: ^3.0.1
+  resize: ^1.0.0
+  window_manager: ^0.3.8
 
 dev_dependencies:
   flutter_test:

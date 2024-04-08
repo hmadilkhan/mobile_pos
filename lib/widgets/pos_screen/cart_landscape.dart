@@ -21,6 +21,8 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
+    // print(Get.width);
+    // print(Get.height);
     return GetBuilder<CartController>(builder: (controller) {
       return Container(
         width: MediaQuery.of(context).size.width * 0.3,
@@ -55,21 +57,43 @@ class _CartState extends State<Cart> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Transform.scale(
-                      scale: 1.5,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.discount_outlined,
-                          color: AppColors.white,
-                          // size: 40,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Transform.scale(
+                          scale: 1.5,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.discount_outlined,
+                              color: AppColors.white,
+                              // size: 40,
+                            ),
+                            onPressed: () {
+                              // do something
+                              controller.showDicountDialog();
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          // do something
-                        },
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Transform.scale(
+                          scale: 1.5,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.delete_outline_outlined,
+                              color: Colors.white,
+                              // size: 40,
+                            ),
+                            onPressed: () {
+                              // do something
+                              controller.emptyCart();
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
