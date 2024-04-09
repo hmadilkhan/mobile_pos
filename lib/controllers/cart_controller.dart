@@ -91,7 +91,8 @@ class CartController extends GetxController {
   void showDicountDialog() {
     Get.dialog(
       Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 600, vertical: 200),
+        insetPadding:
+            const EdgeInsets.symmetric(horizontal: 600, vertical: 200),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         backgroundColor: AppColors.charcoal,
         child: Column(
@@ -130,8 +131,9 @@ class CartController extends GetxController {
                       height: 100,
                       decoration: BoxDecoration(
                           color: AppColors.primary,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      padding: EdgeInsets.all(10),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -163,11 +165,11 @@ class CartController extends GetxController {
                     child: Container(
                       width: 120,
                       height: 100,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.black26,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
