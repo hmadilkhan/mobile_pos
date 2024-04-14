@@ -60,31 +60,28 @@ class _CartState extends State<Cart> {
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Transform.scale(
-                          scale: 1.5,
+                          scale: 1.3,
                           child: IconButton(
                             icon: Icon(
                               Icons.discount_outlined,
                               color: AppColors.white,
-                              // size: 40,
                             ),
                             onPressed: () {
-                              // do something
                               controller.showDicountDialog();
                             },
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Transform.scale(
-                          scale: 1.5,
+                          scale: 1.3,
                           child: IconButton(
-                            icon: const Icon(
+                            icon: Icon(
                               Icons.delete_outline_outlined,
-                              color: Colors.white,
-                              // size: 40,
+                              color: AppColors.white,
                             ),
                             onPressed: () {
                               // do something
@@ -99,7 +96,7 @@ class _CartState extends State<Cart> {
               ),
             ),
             Expanded(
-              flex: 1,
+              // flex: 1,
               child: Container(
                 margin: const EdgeInsets.only(top: 10),
                 width: MediaQuery.of(context).size.width * 0.29,
@@ -155,7 +152,7 @@ class _CartState extends State<Cart> {
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.29,
-              height: MediaQuery.of(context).size.height * 0.17,
+              height: MediaQuery.of(context).size.height * 0.20,
               margin: const EdgeInsets.only(top: 12),
               decoration: BoxDecoration(
                 color: AppColors.charcoal,
@@ -170,7 +167,7 @@ class _CartState extends State<Cart> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(
-                        right: 5.0, left: 5.0, bottom: 3.0, top: 3.0),
+                        right: 5.0, left: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -197,7 +194,7 @@ class _CartState extends State<Cart> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        right: 5.0, left: 5.0, bottom: 3.0),
+                        right: 5.0, left: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -224,7 +221,7 @@ class _CartState extends State<Cart> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
-                        right: 5.0, left: 5.0, bottom: 4.0),
+                        right: 5.0, left: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -249,20 +246,47 @@ class _CartState extends State<Cart> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 5.0, left: 5.0, bottom: 2.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Discount ",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            fontFamily: "Poppins",
+                          ),
+                        ),
+                        Text(
+                          "Rs. ${controller.discountAmount.value}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            fontFamily: "Poppins",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Divider(
                     height: double.minPositive,
                     color: AppColors.primary,
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(right: 5.0, left: 5.0, top: 2.0),
+                        const EdgeInsets.only(right: 5.0, left: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           "Total",
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                             fontFamily: "Poppins",
@@ -271,7 +295,7 @@ class _CartState extends State<Cart> {
                         Text(
                           "Rs. ${controller.total.value}",
                           style: const TextStyle(
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                             fontFamily: "Poppins",
@@ -285,7 +309,7 @@ class _CartState extends State<Cart> {
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.29,
-              height: MediaQuery.of(context).size.height * 0.08,
+              height: MediaQuery.of(context).size.height * 0.07,
               margin: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: AppColors.primary,

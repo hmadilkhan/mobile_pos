@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mobile_pos/models/cart_modal.dart';
@@ -11,13 +12,15 @@ class CartController extends GetxController {
   RxDouble taxamount = 0.00.obs;
   RxDouble deliveryCharges = 100.00.obs;
   RxDouble total = 0.00.obs;
+  RxBool percentMode = false.obs;
+  RxBool amountMode = false.obs;
+  RxDouble discountTextValue = 0.00.obs;
+  RxDouble discountAmount = 0.00.obs;
 
   @override
   void onInit() {
     super.onInit();
     allItems();
-    emptyCart();
-    print("Init calling");
   }
 
   Future<List<Cart>?> allItems() async {
@@ -27,6 +30,7 @@ class CartController extends GetxController {
     var results =
         List.generate(maps.length, (index) => Cart.dbFromJson(maps[index]));
     listItems.value = results;
+    calculateSubTotal();
     return results;
   }
 
@@ -61,9 +65,10 @@ class CartController extends GetxController {
     } else {
       await DatabaseHelper.updateItemToCart(cart);
     }
-
+    print("Qty ${qty}");
     if (qty == 0) {
       await DatabaseHelper.deleteItemToCart(cart);
+      calculateSubTotal();
     }
 
     calculateSubTotal();
@@ -76,7 +81,13 @@ class CartController extends GetxController {
     if (subtotalAmount[0]["Total"] != null) {
       subtotal.value = subtotalAmount[0]["Total"];
     }
-    total.value = subtotal.value + taxamount.value + deliveryCharges.value;
+    print("SubTotal ${subtotal.value}");
+    applyDiscount();
+    total.value = subtotal.value +
+        taxamount.value +
+        deliveryCharges.value -
+        discountAmount.value;
+    update();
   }
 
   void emptyCart() {
@@ -85,6 +96,9 @@ class CartController extends GetxController {
     taxamount = 0.00.obs;
     subtotal.value = 0.00;
     total = 0.00.obs;
+    discountAmount.value = 0.00;
+    percentMode.value = false;
+    amountMode.value = false;
     update();
   }
 
@@ -92,7 +106,7 @@ class CartController extends GetxController {
     Get.dialog(
       Dialog(
         insetPadding:
-            const EdgeInsets.symmetric(horizontal: 600, vertical: 200),
+            const EdgeInsets.symmetric(horizontal: 400, vertical: 100),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         backgroundColor: AppColors.charcoal,
         child: Column(
@@ -101,11 +115,20 @@ class CartController extends GetxController {
               padding: const EdgeInsets.all(20.0),
               child: AppBar(
                 centerTitle: true,
-                title: const Text("Add Discount"),
-                leading: const Icon(Icons.arrow_back),
+                title: Text(
+                  "Apply Discount",
+                  style: TextStyle(color: AppColors.white),
+                ),
+                leading: Icon(
+                  Icons.arrow_back,
+                  color: AppColors.white,
+                ),
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: Icon(
+                      Icons.close,
+                      color: AppColors.white,
+                    ),
                     onPressed: () {
                       Get.back();
                     },
@@ -126,105 +149,178 @@ class CartController extends GetxController {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 120,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10))),
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            color: AppColors.white,
-                            icon: Icon(
-                              Icons.percent,
-                              color: AppColors.primary,
-                              size: 30,
-                            ),
-                            tooltip: 'By Percentage %',
-                            onPressed: () {},
-                            style: IconButton.styleFrom(
-                                backgroundColor: Colors.white),
+                    child: Obx(
+                      () => InkWell(
+                        onTap: () {
+                          amountMode.value = false;
+                          percentMode.value = true;
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              color: (percentMode.value == true
+                                  ? AppColors.primary
+                                  : Colors.black26),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10))),
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                color: AppColors.white,
+                                icon: Icon(
+                                  Icons.percent,
+                                  color: AppColors.primary,
+                                  size: 30,
+                                ),
+                                tooltip: 'By Percentage %',
+                                onPressed: () {},
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.white),
+                              ),
+                              const Text('By Percentage',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontFamily: "Poppins",
+                                  )),
+                            ],
                           ),
-                          const Text('By Percentage',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontFamily: "Poppins",
-                              )),
-                        ],
+                        ),
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 120,
-                      height: 100,
-                      decoration: const BoxDecoration(
-                        color: Colors.black26,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            color: AppColors.white,
-                            icon: Icon(
-                              Icons.percent,
-                              color: AppColors.primary,
-                              size: 30,
-                            ),
-                            tooltip: 'By Amount',
-                            onPressed: () {},
-                            style: IconButton.styleFrom(
-                                backgroundColor: Colors.white),
+                    child: Obx(
+                      () => InkWell(
+                        onTap: () {
+                          amountMode.value = true;
+                          percentMode.value = false;
+                        },
+                        child: Container(
+                          width: 120,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: (amountMode.value == true
+                                ? AppColors.primary
+                                : Colors.black26),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                           ),
-                          const Text('By Amount',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontFamily: "Poppins",
-                              )),
-                        ],
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                color: AppColors.white,
+                                icon: Icon(
+                                  Icons.currency_lira_outlined,
+                                  color: AppColors.primary,
+                                  size: 30,
+                                ),
+                                tooltip: 'By Amount',
+                                onPressed: () {},
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.white),
+                              ),
+                              const Text('By Amount',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontFamily: "Poppins",
+                                  )),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   )
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                cursorColor: AppColors.white,
+                textAlign: TextAlign.left,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+.?[0-9]*')),
+                ],
+                onChanged: (value) {
+                  if (value != "") {
+                    discountTextValue.value = double.parse(value);
+                  }
+                },
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                ),
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.white, width: 0.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  fillColor: AppColors.white,
+                  focusColor: AppColors.white,
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.white, width: 0.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                ),
+              ),
+            ),
+            Container(
+              width: Get.width * 0.34,
+              padding: const EdgeInsets.all(18.0),
+              margin: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(
+                  color: AppColors.primary,
+                  width: 3.0,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  applyDiscount();
+                  Navigator.of(Get.overlayContext!, rootNavigator: true).pop();
+                },
+                child: Text(
+                  'APPLY DISCOUNT %',
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
-    // Get.defaultDialog(
+  }
 
-    // title: "Add Discount",
-    // content: Column(
-    //   children: [
-    //     AppBar(
-    //       title: Text("Add Discount"),
-    //       leading: Icon(Icons.back_hand),
-    //       actions: [Icon(Icons.close)],
-    //     )
-    //   ],
-    // ),
-    // actions: [
-    //   TextButton(
-    //     child: const Text("Ok"),
-    //     onPressed: () => Get.back(),
-    //   ),
-    //   TextButton(
-    //     child: const Text("Close"),
-    //     onPressed: () => Get.back(),
-    //   ),
-    // ],
-    // );
+  void applyDiscount() {
+    if (percentMode.value == true) {
+      discountAmount.value = (discountTextValue.value / 100) * subtotal.value;
+    } else if (amountMode.value == true) {
+      discountAmount.value = discountTextValue.value;
+    }
+    total.value = total.value - discountAmount.value;
+    print("Discount");
+    update();
+    // calculateSubTotal();
   }
 }
