@@ -44,7 +44,6 @@ class CartController extends GetxController {
     if (mode == "cart") {
       if (quantity < qty) {
         qty = quantity;
-        // qty--;
       }
     }
     var cart = Cart();
@@ -65,7 +64,6 @@ class CartController extends GetxController {
     } else {
       await DatabaseHelper.updateItemToCart(cart);
     }
-    print("Qty ${qty}");
     if (qty == 0) {
       await DatabaseHelper.deleteItemToCart(cart);
       calculateSubTotal();
@@ -81,7 +79,6 @@ class CartController extends GetxController {
     if (subtotalAmount[0]["Total"] != null) {
       subtotal.value = subtotalAmount[0]["Total"];
     }
-    print("SubTotal ${subtotal.value}");
     applyDiscount();
     total.value = subtotal.value +
         taxamount.value +
@@ -106,7 +103,7 @@ class CartController extends GetxController {
     Get.dialog(
       Dialog(
         insetPadding:
-            const EdgeInsets.symmetric(horizontal: 400, vertical: 100),
+            const EdgeInsets.symmetric(horizontal: 400, vertical: 200),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         backgroundColor: AppColors.charcoal,
         child: Column(
@@ -318,8 +315,11 @@ class CartController extends GetxController {
     } else if (amountMode.value == true) {
       discountAmount.value = discountTextValue.value;
     }
-    total.value = total.value - discountAmount.value;
-    print("Discount");
+    var discounttotal = subtotal.value +
+        taxamount.value +
+        deliveryCharges.value -
+        discountAmount.value;
+    total.value = double.parse(discounttotal.toStringAsFixed(2));
     update();
     // calculateSubTotal();
   }
