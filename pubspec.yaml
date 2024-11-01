@@ -24,6 +24,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   resize: ^1.0.0
   window_manager: ^0.3.8
+  popover: ^0.3.0+1
 
 dev_dependencies:
   flutter_test:

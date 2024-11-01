@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mobile_pos/widgets/pos_screen/pop_over_item.dart';
+import 'package:popover/popover.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PosHeader extends StatefulWidget {

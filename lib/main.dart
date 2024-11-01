@@ -8,6 +8,7 @@ import 'package:mobile_pos/screens/login_screen.dart';
 import 'package:mobile_pos/utils/my_binding.dart';
 // import 'package:mobile_pos/main_view.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ void main() {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+  if (kIsWeb) {}
 
   runApp(const MyApp());
 }

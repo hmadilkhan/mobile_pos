@@ -3,10 +3,12 @@ import 'package:mobile_pos/utils/colors.dart';
 import 'package:mobile_pos/widgets/pos_screen/cart_landscape.dart';
 import 'package:mobile_pos/widgets/pos_screen/departments.dart';
 import 'package:mobile_pos/widgets/pos_screen/departments_landscape.dart';
+import 'package:mobile_pos/widgets/pos_screen/pop_over_item.dart';
 import 'package:mobile_pos/widgets/pos_screen/pos_header.dart';
 import 'package:mobile_pos/widgets/pos_screen/product_search.dart';
 import 'package:mobile_pos/widgets/pos_screen/products.dart';
 import 'package:mobile_pos/widgets/pos_screen/products_landscape.dart';
+import 'package:popover/popover.dart';
 
 class PosScreen extends StatelessWidget {
   const PosScreen({super.key});
@@ -85,14 +87,28 @@ class PosScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  backgroundColor: AppColors.white,
-                  child: Text(
-                    "A",
-                    style: TextStyle(
-                        color: AppColors.primary,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w800),
+                child: GestureDetector(
+                  // onTap: () =>
+                  // showPopover(
+                  //   context: context,
+                  //   bodyBuilder: (context) => const PopOverItem(),
+                  //   width: 200,
+                  //   height: 400,
+                  //   arrowHeight: 15,
+                  //   arrowWidth: 30,
+                  //   onPop: () => print('Popover was popped!'),
+                  //   direction: PopoverDirection.bottom,
+                  //   backgroundColor: Colors.white,
+                  // ),
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.white,
+                    child: Text(
+                      "A",
+                      style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800),
+                    ),
                   ),
                 ),
               ),
